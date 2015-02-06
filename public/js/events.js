@@ -6,12 +6,11 @@ function Events () {
     };
     this.bind = function() {
         $('#Save').on('click', function(event) {
-            event.preventDefault();
             self.saveClicked(event);
-            return false;
         });
     },
     this.saveClicked = function(event) {
+        event.preventDefault();
         $.ajax({
             type: 'POST',
             url: $('#data_form').attr('action'),
@@ -24,6 +23,7 @@ function Events () {
                 }
             }
         });
+        return false;
     },
     this.saveSuccess = function() {
         window.location = '../';

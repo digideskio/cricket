@@ -12,7 +12,7 @@ class HomeController extends BaseController {
 		if (empty($event_id) === true) {
             return Redirect::to('/events/select');
         } else {
-            return Redirect::to('/vendors/overview');
+            return Redirect::to('/events/vendors/overview');
         }
 	}
 }
