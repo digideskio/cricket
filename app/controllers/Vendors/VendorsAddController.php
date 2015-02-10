@@ -28,14 +28,13 @@ class VendorsAddController extends BaseController
         $surname = Input::get('surname');
         $id_number = Input::get('id_number');
 
-        $model = $this->model->create(
+        return $this->model->create(
             array(
-                'description' => $aka,
+                'aka' => $aka,
                 'name' => $name,
                 'surname' => $surname,
                 'id_number' => $id_number,
             )
         );
-        return $model;
     }
 }

@@ -15,6 +15,7 @@ class EventsSelectControllerTest extends TestCase
     public function tearDown()
     {
         Mockery::close();
+        Session::forget('event_id');
     }
 
     public function testSelectEvent_NoExistingEvents_RedirectsToNewEvent()
@@ -29,5 +30,23 @@ class EventsSelectControllerTest extends TestCase
         $this->model->shouldReceive('all')->once()->andReturn(array());
         $this->call('GET', '/events/select');
         $this->assertViewHas('events');
+    }
+
+    public function testAssignSelected_NoExistingEvent_ReturnsFailureResponse()
+    {
+        $this->model->shouldReceive('findOrFail')->once()->andThrow(new NoDataException());
+        $returned = $this->call('POST', '/events/select');
+        $data = $returned->getData(true);
+        $this->assertEquals('no', $data['success']);
+    }
+
+    public function testAssignSelected_ExistingEvent_AssignsEventAndRedirects()
+    {
+        $event = new stdClass();
+        $event->event_id = 1;
+
+        $this->model->shouldReceive('findOrFail')->once()->andReturn($event);
+        $this->call('POST', '/events/select');
+        $this->assertRedirectedTo('/events/vendors/assigned');
     }
 }

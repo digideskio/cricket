@@ -18,4 +18,15 @@ class EventsSelectController extends BaseController
         }
         return View::make('Events/select', array('events' => $events));
     }
+
+    public function assignSelected()
+    {
+        try {
+            $events = $this->events->findOrFail(Input::get('event_id'));
+            Session::put('event_id', $events->event_id);
+        } catch (NoDataException $e) {
+            return Response::json(array('success' => 'no'), 200);
+        }
+        return Redirect::to('/events/vendors/assigned');
+    }
 }

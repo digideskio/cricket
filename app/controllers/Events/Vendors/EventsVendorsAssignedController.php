@@ -1,6 +1,6 @@
 <?php
 
-class EventsVendorsOverviewController extends BaseController
+class EventsVendorsAssignedController extends BaseController
 {
     private $model;
 
@@ -9,13 +9,13 @@ class EventsVendorsOverviewController extends BaseController
         $this->model = $model;
     }
 
-    public function showOverview()
+    public function showAssigned()
     {
         try {
             $mapped = $this->model->all();
         } catch (NoDataException $e) {
             return Redirect::to('/events/vendors/assign');
         }
-        return View::make('Events/Vendors/overview', array('vendors' => $mapped));
+        return View::make('Events/Vendors/assigned', array('vendors' => $mapped));
     }
 }

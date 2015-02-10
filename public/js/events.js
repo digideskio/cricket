@@ -1,39 +1,39 @@
 function Events () {
+    var Base;
     var self = this;
 
-    this.constructor = function() {
-        self.bind();
-    };
-    this.bind = function() {
+    this.constructor = function(base) {
+        Base = base;
+        self.bindSave();
+        self.bindAnchors();
+    },
+    this.bindSave = function() {
         $('#Save').on('click', function(event) {
-            self.saveClicked(event);
+            event.preventDefault();
+            Base.saveClicked(
+                function() { window.location = '../' },
+                function() { alert('nay') }
+            );
+            return false;
         });
     },
-    this.saveClicked = function(event) {
-        event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: $('#data_form').attr('action'),
-            data: $('#data_form').serialize(),
-            success: function (data) {
-                if (data.success == 'yes') {
-                    self.saveSuccess();
-                } else {
-                    self.saveError();
-                }
-            }
+    this.bindAnchors = function() {
+        $('a.event-select').on('click', function(event) {
+            event.preventDefault();
+            anchor = event.currentTarget;
+            //console.log($('#target_url').val()); return false;
+            Base.ajax(
+                $('#target_url').val(),
+                'event_id=' + $(anchor).data('id'),
+                function() { window.location = '../' },
+                function() { alert('nay') }
+            );
+            return false;
         });
-        return false;
-    },
-    this.saveSuccess = function() {
-        window.location = '../';
-    },
-    this.saveError = function() {
-        alert('nay');
     }
 }
 
 $(document).ready( function() {
     event = new Events();
-    event.constructor();
+    event.constructor(new Base());
 })
