@@ -6,14 +6,11 @@
     </head>
     <body>
         {{ Form::open(array('id' => 'data_form')) }}
-            {{ Form::hidden('add_url', url('events/add'), array('id' => 'add_url')) }}
-            {{ Form::hidden('success_url', url('events/vendors/assigned'), array('id' => 'success_url')) }}
-
+            {{ Form::hidden('assign_url', url('events/vendors/assign'), array('id' => 'assign_url')) }}
             <p style="<?php echo empty($message) === true ? 'display:none' : ''; ?>" id="feedback">{{ $message or '' }}</p>
-
-            {{ Form::label('description', 'Event description') }}
-            {{ Form::text('description', '') }}
-            {{ Form::button('Save', array('id' => 'Save')) }}
+            @foreach ($vendors as $vendor)
+                <br><a class="vendor-select" href="" data-id="{{ $vendor->id }}">{{ $vendor->aka }}</a>
+            @endforeach
         {{ Form::close() }}
     </body>
 </html>

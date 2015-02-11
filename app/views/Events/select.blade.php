@@ -6,10 +6,13 @@
     </head>
     <body>
         {{ Form::open(array('id' => 'data_form')) }}
-            {{ Form::hidden('target_url', url('events/select'), array('id' => 'target_url')) }}
+            {{ Form::hidden('select_url', url('events/select'), array('id' => 'select_url')) }}
+            {{ Form::hidden('success_url', url('events/vendors/assigned'), array('id' => 'success_url')) }}
+            <p style="<?php echo empty($message) === true ? 'display:none' : ''; ?>" id="feedback">{{ $message or '' }}</p>
             @foreach ($events as $event)
-                <a class="event-select" href="" data-id="{{ $event->id }}">{{ $event->description }}</a>
+                <br><a class="event-select" href="" data-id="{{ $event->id }}">{{ $event->description }}</a>
             @endforeach
         {{ Form::close() }}
+        <br><a href="{{ url('events/new') }}">Create new event</a>
     </body>
 </html>

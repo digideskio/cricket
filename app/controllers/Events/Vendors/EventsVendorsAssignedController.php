@@ -14,8 +14,8 @@ class EventsVendorsAssignedController extends BaseController
         try {
             $mapped = $this->model->all();
         } catch (NoDataException $e) {
-            return Redirect::to('/events/vendors/assign');
+            return Redirect::to('/events/vendors/assign')->with('message', 'Please add vendors to event');
         }
-        return View::make('Events/Vendors/assigned', array('vendors' => $mapped));
+        return View::make('Events/Vendors/assigned', $this->getMesssageArray(array('vendors' => $mapped)));
     }
 }

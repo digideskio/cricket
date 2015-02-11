@@ -27,9 +27,11 @@ class EventsSelectControllerTest extends TestCase
 
     public function testSelectEvent_ExistingEvents_ReturnsEvents()
     {
+        $this->session(array('message' => 'message'));
         $this->model->shouldReceive('all')->once()->andReturn(array());
         $this->call('GET', '/events/select');
         $this->assertViewHas('events');
+        $this->assertViewHas('message');
     }
 
     public function testAssignSelected_NoExistingEvent_ReturnsFailureResponse()
@@ -40,13 +42,14 @@ class EventsSelectControllerTest extends TestCase
         $this->assertEquals('no', $data['success']);
     }
 
-    public function testAssignSelected_ExistingEvent_AssignsEventAndRedirects()
+    public function testAssignSelected_ExistingEvent_AssignsEvent()
     {
         $event = new stdClass();
-        $event->event_id = 1;
+        $event->id = 1;
 
         $this->model->shouldReceive('findOrFail')->once()->andReturn($event);
-        $this->call('POST', '/events/select');
-        $this->assertRedirectedTo('/events/vendors/assigned');
+        $returned = $this->call('POST', '/events/select');
+        $data = $returned->getData(true);
+        $this->assertEquals('yes', $data['success']);
     }
 }

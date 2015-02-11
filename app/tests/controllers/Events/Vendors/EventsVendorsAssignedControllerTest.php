@@ -28,8 +28,10 @@ class EventsVendorsAssignedControllerTest extends TestCase
 
     public function testShowOverview_AssignedVendors_ReturnsDataToView()
     {
+        $this->session(array('message' => 'message'));
         $this->model->shouldReceive('all')->once()->andReturn(array());
         $this->call('GET', '/events/vendors/assigned');
         $this->assertViewHas('vendors');
+        $this->assertViewHas('message');
     }
 }
