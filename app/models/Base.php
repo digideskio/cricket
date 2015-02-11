@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
+use LaravelBook\Ardent\Ardent;
 
-class Base extends Model
+class Base extends Ardent
 {
     public static function all($colums = array('*'))
     {

@@ -22,17 +22,4 @@ class BaseController extends Controller {
 			: array();
 		return array_merge($additional, $message);
 	}
-
-	protected function validateData($data, $rules)
-	{
-		$validator = Validator::make($data, $rules);
-
-		if ($validator->fails() === true) {
-			$msg = 'Could not save for the following reason(s):';
-			foreach ($validator->messages()->all() as $failed) {
-				$msg .= ' ' . $failed;
-			}
-			throw new DataFailureException($msg);
-		}
-	}
 }
