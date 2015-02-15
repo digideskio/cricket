@@ -7,7 +7,7 @@ return array(
             'host'      => 'localhost',
             'database'  => 'practice_test',
             'username'  => 'root',
-            'password'  => 'pass',
+            'password'  => 'newc0de',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
