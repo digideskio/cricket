@@ -28,8 +28,8 @@ class VendorsAddController extends BaseController
     {
         $this->model->aka = Input::get('aka');
         $this->model->name = Input::get('name');
-        $this->model->aka = Input::get('surname');
-        $this->model->aka = Input::get('id_number');
+        $this->model->surname = Input::get('surname');
+        $this->model->id_number = Input::get('id_number');
 
         if ($this->model->save() === false) {
             throw new DataSaveException($this->model->errors()->all());

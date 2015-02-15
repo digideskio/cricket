@@ -31,4 +31,13 @@ class Base extends Ardent
             throw new NoDataException();
         }
     }
+
+    public function whereNotIn($something, $somethingelse)
+    {
+        $data = parent::whereNotIn($something, $somethingelse);
+        if ($data->count() === 0) {
+            throw new NoDataException();
+        }
+        return $data;
+    }
 }

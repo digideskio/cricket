@@ -4,15 +4,19 @@ class VendorsAddControllerTest extends TestCase
 {
     private $model;
 
+    public function setUp()
+    {
+        Artisan::call('migrate');
+    }
+
     public function tearDown()
     {
+        Artisan::call('migrate:reset');
         Mockery::close();
     }
 
     public function testAddVendor_AddingFails_ReturnsFailureJSON()
     {
-        Artisan::call('migrate');
-        
         $mock = Mockery::mock('Vendor');
         App::instance('Vendor', $mock);
 
