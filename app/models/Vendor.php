@@ -9,4 +9,8 @@ class Vendor extends Base {
         'photo',
         'id_number',
     );
+
+    public static $rules = array(
+        'aka' => 'required|between:4,16',
+    );
 }

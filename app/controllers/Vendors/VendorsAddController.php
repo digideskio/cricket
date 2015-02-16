@@ -14,35 +14,25 @@ class VendorsAddController extends BaseController
     public function add()
     {
         try {
-            $vendor = $this->addVendor();
-        } catch (DataFailureException $e) {
+            $this->addVendor();
+        } catch (DataSaveException $e) {
             return Response::json(
                 array('success' => 'no', 'message' => $e->getMessage()),
                 200
             );
         }
-        return Response::json(array('success' => 'yes', 'vendor' => $vendor), 200);
+        return Response::json(array('success' => 'yes', 'vendor' => $this->model), 200);
     }
 
     private function addVendor()
     {
-        $this->validateData(
-            array('aka' => Input::get('aka')),
-            array('aka' => 'required')
-        );
+        $this->model->aka = Input::get('aka');
+        $this->model->name = Input::get('name');
+        $this->model->surname = Input::get('surname');
+        $this->model->id_number = Input::get('id_number');
 
-        $aka = Input::get('aka');
-        $name = Input::get('name');
-        $surname = Input::get('surname');
-        $id_number = Input::get('id_number');
-
-        return $this->model->create(
-            array(
-                'aka' => $aka,
-                'name' => $name,
-                'surname' => $surname,
-                'id_number' => $id_number,
-            )
-        );
+        if ($this->model->save() === false) {
+            throw new DataSaveException($this->model->errors()->all());
+        }
     }
 }
