@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-        "mockery/mockery": "0.9.*@dev"
+        "mockery/mockery": "0.9.*@dev",
+	    "laravelbook/ardent": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
