@@ -2,32 +2,20 @@
 
 class VendorsAddControllerTest extends TestCase
 {
-    private $model;
-
     public function setUp()
     {
+        parent::setUp();
         Artisan::call('migrate');
     }
 
     public function tearDown()
     {
         Artisan::call('migrate:reset');
-        Mockery::close();
     }
 
     public function testAddVendor_AddingFails_ReturnsFailureJSON()
     {
-        $mock = Mockery::mock('Vendor');
-        App::instance('Vendor', $mock);
-
-        $errors = Mockery::mock('Illuminate\Support\MessageBag');
-        $errors->shouldReceive('all')->once()->andReturn(array('foo' => 'bar'));
-
-        $mock->shouldReceive('setAttribute')->times(4)->andReturn(false);
-        $mock->shouldReceive('save')->once()->andReturn(false);
-        $mock->shouldReceive('errors')->andReturn($errors);
-
-        $returned = $this->call('POST', '/vendors/add', array('aka' => 'aka'));
+        $returned = $this->call('POST', '/vendors/add', array('name' => 'name'));
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);
     }
@@ -38,7 +26,7 @@ class VendorsAddControllerTest extends TestCase
             'POST',
             '/vendors/add',
             array(
-                'aka' => 'aka',
+                'aka' => 'aka1',
                 'name' => 'name',
                 'surname' => 'surname',
                 'id_number' => 'id_number',

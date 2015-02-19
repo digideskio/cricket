@@ -22,8 +22,9 @@ class EventsVendorsAssignControllerTest extends TestCase
         $this->setupMocks();
 
         $this->vendor->shouldReceive('whereNotIn')->once()->andThrow(new NoDataException());
-        $this->call('GET', '/events/vendors/assign');
-        $this->assertRedirectedTo('/vendors/new');
+        $returned = $this->call('GET', '/events/vendors/assign');
+        $data = $returned->getOriginalContent();
+        $this->assertEquals(array(), $data['vendors']);
     }
 
     public function testShowVendors_VendorsExist_ReturnsDataToView()

@@ -8,9 +8,12 @@
         {{ Form::open(array('id' => 'data_form')) }}
             {{ Form::hidden('assign_url', url('events/vendors/assign'), array('id' => 'assign_url')) }}
             <p style="<?php echo empty($message) === true ? 'display:none' : ''; ?>" id="feedback">{{ $message or '' }}</p>
+            <?php $count = 0; ?>
             @foreach ($vendors as $vendor)
+                <?php $count++; ?>
                 <br><a class="vendor-select" href="" data-id="{{ $vendor->id }}">{{ $vendor->aka }}</a>
             @endforeach
+            <?php if ($count === 0) { echo 'No unassigned vendors'; } ?>
         {{ Form::close() }}
     </body>
 </html>

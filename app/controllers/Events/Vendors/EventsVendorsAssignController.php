@@ -16,7 +16,7 @@ class EventsVendorsAssignController extends BaseController
         try {
             $vendors = $this->getVendors();
         } catch (NoDataException $e) {
-            return Redirect::to('/vendors/new')->with('message', 'Please add vendors to the system');
+            return View::make('Events/Vendors/assign', array('vendors' => array()));
         }
         return View::make('Events/Vendors/assign', array('vendors' => $vendors));
     }

@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Response;
-
 class VendorsAddController extends BaseController
 {
     private $model;
