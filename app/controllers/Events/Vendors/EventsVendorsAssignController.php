@@ -32,13 +32,12 @@ class EventsVendorsAssignController extends BaseController
 
     public function assignVendor()
     {
+        $values = array(
+            'event_id' => Session::get('event_id'),
+            'vendor_id' => Input::get('vendor_id'),
+        );
         try {
-            $this->mapping->create(
-                array(
-                    'event_id' => Session::get('event_id'),
-                    'vendor_id' => Input::get('vendor_id'),
-                )
-            );
+            $this->mapping->updateOrCreate($values, $values);
         } catch (NoDataException $e) {
             return Response::json(
                 array('success' => 'no', 'message' => 'Unable to assign vendor'),

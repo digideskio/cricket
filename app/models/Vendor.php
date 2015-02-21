@@ -11,6 +11,6 @@ class Vendor extends Base {
     );
 
     public static $rules = array(
-        'aka' => 'required|between:4,16',
+        'aka' => 'required|between:2,16',
     );
 }

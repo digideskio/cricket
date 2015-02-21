@@ -36,11 +36,14 @@ function Events () {
     this.bindVendorAssignAnchors = function() {
         $('a.vendor-select').on('click', function(event) {
             event.preventDefault();
-            anchor = event.currentTarget;
+            $anchor = $(event.currentTarget);
             Base.call(
                 $('#assign_url').val(),
-                'vendor_id=' + $(anchor).data('id'),
-                function() { Base.showSuccessMessage('Vendor assigned'); },
+                'vendor_id=' + $anchor.data('id'),
+                function() {
+                    $anchor.hide();
+                    Base.showSuccessMessage('Vendor assigned');
+                },
                 function(msg) { Base.showFailMessage(msg); }
             );
             return false;

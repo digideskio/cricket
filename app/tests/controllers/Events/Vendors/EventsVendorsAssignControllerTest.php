@@ -46,7 +46,7 @@ class EventsVendorsAssignControllerTest extends TestCase
     {
         $this->setupMocks();
 
-        $this->mapping->shouldReceive('create')->once()->andThrow(new NoDataException());
+        $this->mapping->shouldReceive('updateOrCreate')->once()->andThrow(new NoDataException());
         $returned = $this->call('POST', '/events/vendors/assign');
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);
@@ -59,10 +59,28 @@ class EventsVendorsAssignControllerTest extends TestCase
         $mapping = new stdClass();
         $mapping->id = 1;
 
-        $this->mapping->shouldReceive('create')->once()->andReturn($mapping);
+        $this->mapping->shouldReceive('updateOrCreate')->once()->andReturn($mapping);
         $returned = $this->call('POST', '/events/vendors/assign');
         $data = $returned->getData(true);
         $this->assertEquals('yes', $data['success']);
+    }
+
+    public function testAssignVendor_VendorAssigned_DoesNotDuplicate()
+    {
+        $this->session(array('event_id' => 1));
+        $mapping = new EventsVendorsMapping();
+        $mapping->create(array('event_id' => 1, 'vendor_id' => 1));
+
+        $this->call(
+            'POST',
+            '/events/vendors/assign',
+            array(
+                'vendor_id' => 1,
+            )
+        );
+
+        $data = $mapping->all();
+        $this->assertEquals(1, $data->count());
     }
 
     private function setupMocks()
