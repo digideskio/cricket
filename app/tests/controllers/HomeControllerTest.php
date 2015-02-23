@@ -20,6 +20,6 @@ class HomeControllerTest extends TestCase {
         $this->session(['event_id' => 1]);
 
         $this->call('GET', '/');
-        $this->assertRedirectedTo('/events/vendors/overview');
+        $this->assertRedirectedTo('/events/vendors/assigned');
     }
 }
