@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class EventsSelectControllerTest extends TestCase
 {
     private $model;
@@ -20,7 +22,7 @@ class EventsSelectControllerTest extends TestCase
 
     public function testSelectEvent_NoExistingEvents_RedirectsToNewEvent()
     {
-        $this->model->shouldReceive('all')->once()->andThrow(new NoDataException());
+        $this->model->shouldReceive('all')->once()->andThrow(new ModelNotFoundException());
         $this->call('GET', '/events/select');
         $this->assertRedirectedTo('/events/new');
     }
@@ -36,7 +38,7 @@ class EventsSelectControllerTest extends TestCase
 
     public function testAssignSelected_NoExistingEvent_ReturnsFailureResponse()
     {
-        $this->model->shouldReceive('findOrFail')->once()->andThrow(new NoDataException());
+        $this->model->shouldReceive('findOrFail')->once()->andThrow(new ModelNotFoundException());
         $returned = $this->call('POST', '/events/select');
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);

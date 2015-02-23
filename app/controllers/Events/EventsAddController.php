@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Response;
-
 class EventsAddController extends BaseController
 {
     private $events;
