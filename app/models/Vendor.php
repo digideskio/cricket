@@ -9,8 +9,8 @@ class Vendor extends Base {
         'photo',
         'id_number',
     );
-
     public static $rules = array(
         'aka' => 'required|between:2,16',
     );
+    public $autoHydrateEntityFromInput = true;
 }

@@ -1,29 +1,14 @@
 <?php
 
-class EventsAddController extends BaseController
+class EventsAddController extends BaseAddController
 {
-    private $events;
-
     public function __construct(Events $model)
     {
-        $this->events = $model;
+        $this->model = $model;
     }
 
     public function add()
     {
-        try {
-            $id = $this->addEvent();
-            Session::put('event_id', $id);
-        } catch (DataFailureException $e) {
-            return Response::json(array('success' => 'no'), 200);
-        }
-        return Response::json(array('success' => 'yes'), 200);
-    }
-
-    private function addEvent()
-    {
-        $name = Input::get('description', 'default');
-        $model = $this->events->create(array('description' => $name));
-        return $model->id;
+        return parent::add();
     }
 }

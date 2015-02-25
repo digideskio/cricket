@@ -2,36 +2,33 @@
 
 class EventsAddControllerTest extends TestCase
 {
-    private $model;
-
     public function setUp()
     {
         parent::setUp();
-
-        $this->model = Mockery::mock('Eloquent', 'Events');
-        App::instance('Events', $this->model);
+        Artisan::call('migrate');
     }
 
     public function tearDown()
     {
-        Mockery::close();
-        Session::forget('event_id');
+        Artisan::call('migrate:reset');
     }
 
     public function testAddEvent_AddingFails_ReturnsFailureJSON()
     {
-        $this->model->shouldReceive('create')->once()->andThrow(new DataFailureException());
-        $returned = $this->call('POST', '/events/new');
+        $returned = $this->call('POST', '/events/new', array('name' => 'name'));
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);
     }
 
     public function testAddEvent_AddingSuccess_ReturnsAddedId()
     {
-        $event = new stdClass();
-        $event->id = 1;
-        $this->model->shouldReceive('create')->once()->with(array('description' => 'default'))->andReturn($event);
-        $returned = $this->call('POST', '/events/new');
+        $returned = $this->call(
+            'POST',
+            '/events/new',
+            array(
+                'description' => 'desc',
+            )
+        );
         $data = $returned->getData(true);
         $this->assertEquals('yes', $data['success']);
     }

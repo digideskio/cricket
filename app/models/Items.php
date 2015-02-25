@@ -9,10 +9,10 @@ class Item extends Base {
         'starting_amount',
         'active',
     );
-
     public static $rules = array(
         'description' => 'required',
         'price' => 'required|integer',
         'starting_amount' => 'integer',
     );
+    public $autoHydrateEntityFromInput = true;
 }
