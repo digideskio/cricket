@@ -15,7 +15,7 @@ class VendorsAddControllerTest extends TestCase
 
     public function testAddVendor_AddingFails_ReturnsFailureJSON()
     {
-        $returned = $this->call('POST', '/vendors/add', array('name' => 'name'));
+        $returned = $this->call('POST', '/vendors/new', array('name' => 'name'));
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);
     }
@@ -24,7 +24,7 @@ class VendorsAddControllerTest extends TestCase
     {
         $returned = $this->call(
             'POST',
-            '/vendors/add',
+            '/vendors/new',
             array(
                 'aka' => 'aka1',
                 'name' => 'name',

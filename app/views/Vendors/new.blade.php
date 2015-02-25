@@ -7,7 +7,7 @@
     <body>
         {{ Form::open(array('id' => 'data_form')) }}
              <p style="<?php echo empty($message) === true ? 'display:none' : ''; ?>" id="feedback">{{ $message or '' }}</p>
-            {{ Form::hidden('add_url', url('vendors/add'), array('id' => 'add_url')) }}
+            {{ Form::hidden('add_url', url('vendors/new'), array('id' => 'add_url')) }}
             {{ Form::label('aka', 'Vendor AKA') }}
             {{ Form::text('aka', '') }}
             {{ Form::label('name', 'Name') }}

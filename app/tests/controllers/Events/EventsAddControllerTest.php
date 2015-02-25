@@ -21,7 +21,7 @@ class EventsAddControllerTest extends TestCase
     public function testAddEvent_AddingFails_ReturnsFailureJSON()
     {
         $this->model->shouldReceive('create')->once()->andThrow(new DataFailureException());
-        $returned = $this->call('POST', '/events/add');
+        $returned = $this->call('POST', '/events/new');
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);
     }
@@ -31,7 +31,7 @@ class EventsAddControllerTest extends TestCase
         $event = new stdClass();
         $event->id = 1;
         $this->model->shouldReceive('create')->once()->with(array('description' => 'default'))->andReturn($event);
-        $returned = $this->call('POST', '/events/add');
+        $returned = $this->call('POST', '/events/new');
         $data = $returned->getData(true);
         $this->assertEquals('yes', $data['success']);
     }

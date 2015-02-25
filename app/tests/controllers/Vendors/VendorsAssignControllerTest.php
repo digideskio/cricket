@@ -1,6 +1,6 @@
 <?php
 
-class EventsVendorsAssignControllerTest extends TestCase
+class VendorsAssignControllerTest extends TestCase
 {
     private $vendor;
     private $mapping;
@@ -22,7 +22,7 @@ class EventsVendorsAssignControllerTest extends TestCase
         $this->setupMocks();
 
         $this->vendor->shouldReceive('whereNotIn')->once()->andThrow(new NoDataException());
-        $returned = $this->call('GET', '/events/vendors/assign');
+        $returned = $this->call('GET', '/vendors/assign');
         $data = $returned->getOriginalContent();
         $this->assertEquals(array(), $data['vendors']);
     }
@@ -31,7 +31,7 @@ class EventsVendorsAssignControllerTest extends TestCase
     {
         $this->prepareData();
 
-        $returned = $this->call('GET', '/events/vendors/assign');
+        $returned = $this->call('GET', '/vendors/assign');
         $data = $returned->getOriginalContent();
 
         $count = 0;
@@ -47,7 +47,7 @@ class EventsVendorsAssignControllerTest extends TestCase
         $this->setupMocks();
 
         $this->mapping->shouldReceive('updateOrCreate')->once()->andThrow(new NoDataException());
-        $returned = $this->call('POST', '/events/vendors/assign');
+        $returned = $this->call('POST', '/vendors/assign');
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);
     }
@@ -60,7 +60,7 @@ class EventsVendorsAssignControllerTest extends TestCase
         $mapping->id = 1;
 
         $this->mapping->shouldReceive('updateOrCreate')->once()->andReturn($mapping);
-        $returned = $this->call('POST', '/events/vendors/assign');
+        $returned = $this->call('POST', '/vendors/assign');
         $data = $returned->getData(true);
         $this->assertEquals('yes', $data['success']);
     }
@@ -73,7 +73,7 @@ class EventsVendorsAssignControllerTest extends TestCase
 
         $this->call(
             'POST',
-            '/events/vendors/assign',
+            '/vendors/assign',
             array(
                 'vendor_id' => 1,
             )

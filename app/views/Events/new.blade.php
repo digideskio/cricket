@@ -6,8 +6,8 @@
     </head>
     <body>
         {{ Form::open(array('id' => 'data_form')) }}
-            {{ Form::hidden('add_url', url('events/add'), array('id' => 'add_url')) }}
-            {{ Form::hidden('success_url', url('events/vendors/assigned'), array('id' => 'success_url')) }}
+            {{ Form::hidden('add_url', url('events/new'), array('id' => 'add_url')) }}
+            {{ Form::hidden('success_url', url('vendors/assigned'), array('id' => 'success_url')) }}
 
             <p style="<?php echo empty($message) === true ? 'display:none' : ''; ?>" id="feedback">{{ $message or '' }}</p>
 

@@ -12,7 +12,7 @@ class HomeController extends BaseController {
 		if (empty($event_id) === true) {
             return Redirect::to('/events/select')->with('message', 'Please select an event');
         } else {
-            return Redirect::to('/events/vendors/assigned');
+            return Redirect::to('/vendors/assigned');
         }
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class EventsVendorsAssignedControllerTest extends TestCase
+class VendorsAssignedControllerTest extends TestCase
 {
     public function setUp()
     {
@@ -19,15 +19,15 @@ class EventsVendorsAssignedControllerTest extends TestCase
     {
         $this->prepareInvalidData();
 
-        $this->call('GET', '/events/vendors/assigned');
-        $this->assertRedirectedTo('/events/vendors/assign');
+        $this->call('GET', '/vendors/assigned');
+        $this->assertRedirectedTo('/vendors/assign');
     }
 
     public function testShowOverview_AssignedVendors_ReturnsDataToView()
     {
         $this->prepareData();
 
-        $returned = $this->call('GET', '/events/vendors/assigned');
+        $returned = $this->call('GET', '/vendors/assigned');
         
         $data = $returned->getOriginalContent();
         $this->assertEquals('test vendor', $data['vendors'][0]['aka']);

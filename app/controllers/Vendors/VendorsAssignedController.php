@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class EventsVendorsAssignedController extends BaseController
+class VendorsAssignedController extends BaseController
 {
     private $model;
 
@@ -16,9 +16,9 @@ class EventsVendorsAssignedController extends BaseController
         try {
             $mapped = $this->getActiveAssignedVendors();
         } catch (ModelNotFoundException $e) {
-            return Redirect::to('/events/vendors/assign')->with('message', 'Please add vendors to event');
+            return Redirect::to('/vendors/assign')->with('message', 'Please add vendors to event');
         }
-        return View::make('Events/Vendors/assigned', $this->getMesssageArray(array('vendors' => $mapped)));
+        return View::make('Vendors/assigned', $this->getMesssageArray(array('vendors' => $mapped)));
     }
 
     private function getActiveAssignedVendors()

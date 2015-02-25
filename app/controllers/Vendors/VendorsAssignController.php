@@ -1,6 +1,6 @@
 <?php
 
-class EventsVendorsAssignController extends BaseController
+class VendorsAssignController extends BaseController
 {
     private $vendor;
     private $mapping;
@@ -16,9 +16,9 @@ class EventsVendorsAssignController extends BaseController
         try {
             $vendors = $this->getVendors();
         } catch (NoDataException $e) {
-            return View::make('Events/Vendors/assign', array('vendors' => array()));
+            $vendors = array();
         }
-        return View::make('Events/Vendors/assign', array('vendors' => $vendors));
+        return View::make('Vendors/assign', array('vendors' => $vendors));
     }
 
     private function getVendors()

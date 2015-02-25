@@ -2,18 +2,17 @@
     <head>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="{{ url('js/base.js') }}"></script>
-        <script src="{{ url('js/events.js') }}"></script>
+        <script src="{{ url('js/Vendors/assigned.js') }}"></script>
     </head>
     <body>
         {{ Form::open(array('id' => 'data_form')) }}
-            {{ Form::hidden('assign_url', url('events/vendors/assign'), array('id' => 'assign_url')) }}
             <p style="<?php echo empty($message) === true ? 'display:none' : ''; ?>" id="feedback">{{ $message or '' }}</p>
             <?php $count = 0; ?>
             @foreach ($vendors as $vendor)
                 <?php $count++; ?>
-                <br><a class="vendor-select" href="" data-id="{{ $vendor->id }}">{{ $vendor->aka }}</a>
+                <br>{{ $vendor->aka }} <a class="vendor-add-item" href="{{ url('events/vendors/items/add') }}/{{ $vendor->id }}">Add item</a>
             @endforeach
-            <?php if ($count === 0) { echo 'No unassigned vendors'; } ?>
+            <?php if ($count === 0) { echo 'No assigned vendors'; } ?>
         {{ Form::close() }}
     </body>
 </html>
