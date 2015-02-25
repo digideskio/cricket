@@ -1,8 +1,8 @@
 <?php
 
-class VendorsAddController extends BaseAddController
+class ItemsAddController extends BaseAddController
 {
-    public function __construct(Vendor $model)
+    public function __construct(Item $model)
     {
         $this->model = $model;
     }
