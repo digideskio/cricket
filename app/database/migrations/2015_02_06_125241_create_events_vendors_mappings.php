@@ -16,8 +16,7 @@ class CreateEventsVendorsMappings extends Migration {
 			$table->increments('id');
 			$table->string('event_id', 128);
 			$table->string('vendor_id', 128);
-			$allow = array('yes', 'no');
-			$table->enum('active', $allow)->default('yes');
+			$table->enum('active', array('yes', 'no'))->default('yes');
 			$table->timestamps();
 		});
 	}
