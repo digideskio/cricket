@@ -12,5 +12,7 @@ class ItemsRouter
                 return View::make('/items/new');
             }
         });
+
+        Route::post('/items/assign', 'ItemsAssignController@assignItem');
     }
 }
