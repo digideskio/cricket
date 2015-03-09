@@ -1,7 +1,7 @@
 <?php
 
-class EventsVendorsMapping extends Base {
-    protected $table = 'events_vendors_mappings';
+class EventVendor extends Base {
+    protected $table = 'event_vendor';
     protected $fillable = array(
         'event_id',
         'vendor_id',

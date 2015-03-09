@@ -36,17 +36,17 @@ class VendorsAssignedControllerTest extends TestCase
 
     private function prepareInvalidData()
     {
-        $eventsVendorsMapping = new EventsVendorsMapping();
-        $eventsVendorsMapping->event_id = 1;
-        $eventsVendorsMapping->vendor_id = 1;
-        $eventsVendorsMapping->active = 'no';
-        $eventsVendorsMapping->save();
+        $EventVendor = new EventVendor();
+        $EventVendor->event_id = 1;
+        $EventVendor->vendor_id = 1;
+        $EventVendor->active = 'no';
+        $EventVendor->save();
 
-        $eventsVendorsMapping = new EventsVendorsMapping();
-        $eventsVendorsMapping->event_id = 2;
-        $eventsVendorsMapping->vendor_id = 1;
-        $eventsVendorsMapping->active = 'yes';
-        $eventsVendorsMapping->save();
+        $EventVendor = new EventVendor();
+        $EventVendor->event_id = 2;
+        $EventVendor->vendor_id = 1;
+        $EventVendor->active = 'yes';
+        $EventVendor->save();
     }
 
     private function prepareData()
@@ -55,10 +55,10 @@ class VendorsAssignedControllerTest extends TestCase
         $vendor->aka = 'test vendor';
         $vendor->save();
 
-        $eventsVendorsMapping = new EventsVendorsMapping();
-        $eventsVendorsMapping->event_id = 1;
-        $eventsVendorsMapping->vendor_id = 1;
-        $eventsVendorsMapping->active = 'yes';
-        $eventsVendorsMapping->save();
+        $EventVendor = new EventVendor();
+        $EventVendor->event_id = 1;
+        $EventVendor->vendor_id = 1;
+        $EventVendor->active = 'yes';
+        $EventVendor->save();
     }
 }

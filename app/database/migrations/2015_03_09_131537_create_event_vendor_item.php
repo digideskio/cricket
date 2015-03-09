@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVendorItem extends Migration {
+class CreateEventVendorItem extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,7 +11,7 @@ class CreateVendorItem extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('vendor_item', function($table)
+		Schema::create('event_vendor_item', function($table)
 		{
 			$table->increments('id');
 			$table->unsignedInteger('vendor_id');
@@ -32,7 +32,7 @@ class CreateVendorItem extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('vendor_item');
+		Schema::drop('event_vendor_item');
 	}
 
 }

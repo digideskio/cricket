@@ -6,7 +6,7 @@ class VendorsAssignedController extends BaseController
 {
     private $model;
 
-    public function __construct(EventsVendorsMapping $model)
+    public function __construct(EventVendor $model)
     {
         $this->model = $model;
     }
@@ -24,11 +24,11 @@ class VendorsAssignedController extends BaseController
     private function getActiveAssignedVendors()
     {
         $mapped = $this->model->leftJoin('vendors', function($join) {
-                $join->on('events_vendors_mappings.vendor_id', '=', 'vendors.id');
+                $join->on('event_vendor.vendor_id', '=', 'vendors.id');
             })
             ->where('event_id', '=', Session::get('event_id'))
             ->where('active', '=', 'yes')
-            ->orderBy('events_vendors_mappings.id', 'ASC')->get();
+            ->orderBy('event_vendor.id', 'ASC')->get();
 
         if ($mapped->count() === 0) {
             throw new ModelNotFoundException();

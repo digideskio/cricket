@@ -5,7 +5,7 @@ class ItemsAssignController extends BaseController
     private $item;
     private $mapping;
 
-    public function __construct(Item $item, VendorsItemsMapping $mapping)
+    public function __construct(Item $item, EventVendorItem $mapping)
     {
         $this->item = $item;
         $this->mapping = $mapping;
@@ -14,9 +14,11 @@ class ItemsAssignController extends BaseController
     public function assignItem()
     {
         $this->addMappingAttributes();
-        if ($this->mapping->save() === false) {
+        try {
+            $this->mapping->save();
+        } catch (Illuminate\Database\QueryException $e) {
             return Response::json(
-                array('success' => 'no', 'message' => $this->mapping->errorString()),
+                array('success' => 'no', 'message' => $e->getMessage()),
                 200
             );
         }
@@ -25,8 +27,8 @@ class ItemsAssignController extends BaseController
 
     private function addMappingAttributes()
     {
-        $this->mapping->event_id => Session::get('event_id');
-        $this->mapping->vendor_id => Input::get('vendor_id');
-        $this->mapping->item_id => Input::get('item_id');
+        $this->mapping->event_id = Session::get('event_id');
+        $this->mapping->vendor_id = Input::get('vendor_id');
+        $this->mapping->item_id = Input::get('item_id');
     }
 }

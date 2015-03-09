@@ -68,7 +68,7 @@ class VendorsAssignControllerTest extends TestCase
     public function testAssignVendor_VendorAssigned_DoesNotDuplicate()
     {
         $this->session(array('event_id' => 1));
-        $mapping = new EventsVendorsMapping();
+        $mapping = new EventVendor();
         $mapping->create(array('event_id' => 1, 'vendor_id' => 1));
 
         $this->call(
@@ -88,8 +88,8 @@ class VendorsAssignControllerTest extends TestCase
         $this->vendor = Mockery::mock('Eloquent', 'Vendor');
         App::instance('Vendor', $this->vendor);
 
-        $this->mapping = Mockery::mock('Eloquent', 'EventsVendorsMapping');
-        App::instance('EventsVendorsMapping', $this->mapping);
+        $this->mapping = Mockery::mock('Eloquent', 'EventVendor');
+        App::instance('EventVendor', $this->mapping);
     }
 
     private function prepareData()
@@ -110,10 +110,14 @@ class VendorsAssignControllerTest extends TestCase
         $vendor->id_number = 'id_number';
         $vendor->save();
 
-        $eventsVendorsMapping = new EventsVendorsMapping();
-        $eventsVendorsMapping->event_id = 1;
-        $eventsVendorsMapping->vendor_id = 1;
-        $eventsVendorsMapping->active = 'yes';
-        $eventsVendorsMapping->save();
+        $event = new Events();
+        $event->description = 'description';
+        $event->save();
+
+        $EventVendor = new EventVendor();
+        $EventVendor->event_id = 1;
+        $EventVendor->vendor_id = 1;
+        $EventVendor->active = 'yes';
+        $EventVendor->save();
     }
 }

@@ -33,4 +33,5 @@ class CreateEventVendor extends Migration {
 	{
 		Schema::drop('event_vendor');
 	}
+
 }

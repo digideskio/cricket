@@ -11,7 +11,7 @@ class CreateEvents extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('events', function($table)
+		Schema::create('events', function($table)
         {
             $table->increments('id');
             $table->string('description', 128);
@@ -27,6 +27,7 @@ class CreateEvents extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('events');
+		Schema::drop('events');
 	}
+
 }

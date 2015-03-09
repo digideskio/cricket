@@ -5,7 +5,7 @@ class VendorsAssignController extends BaseController
     private $vendor;
     private $mapping;
 
-    public function __construct(Vendor $vendor, EventsVendorsMapping $mapping)
+    public function __construct(Vendor $vendor, EventVendor $mapping)
     {
         $this->vendor = $vendor;
         $this->mapping = $mapping;
@@ -39,6 +39,11 @@ class VendorsAssignController extends BaseController
         try {
             $this->mapping->updateOrCreate($values, $values);
         } catch (NoDataException $e) {
+            return Response::json(
+                array('success' => 'no', 'message' => 'Unable to assign vendor'),
+                200
+            );
+        } catch (Illuminate\Database\QueryException $e) {
             return Response::json(
                 array('success' => 'no', 'message' => 'Unable to assign vendor'),
                 200
