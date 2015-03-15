@@ -19,7 +19,6 @@ class CreateEventVendor extends Migration {
 			$table->unsignedInteger('vendor_id');
 			$table->foreign('vendor_id')->references('id')->on('vendors');
 			$table->enum('active', array('yes', 'no'))->default('yes');
-			$table->unique('event_id', 'vendor_id');
 			$table->timestamps();
 		});
 	}

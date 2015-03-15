@@ -2,26 +2,15 @@
 
 class VendorsAssignControllerTest extends TestCase
 {
-    private $vendor;
-    private $mapping;
-
     public function setUp()
     {
         parent::setUp();
-        Artisan::call('migrate');
-    }
-
-    public function tearDown()
-    {
-        Mockery::close();
         Artisan::call('migrate:reset');
+        Artisan::call('migrate');
     }
 
     public function testShowVendors_NoVendors_RedirectsToVendorNew()
     {
-        $this->setupMocks();
-
-        $this->vendor->shouldReceive('whereNotIn')->once()->andThrow(new NoDataException());
         $returned = $this->call('GET', '/vendors/assign');
         $data = $returned->getOriginalContent();
         $this->assertEquals(array(), $data['vendors']);
@@ -30,6 +19,7 @@ class VendorsAssignControllerTest extends TestCase
     public function testShowVendors_VendorsExist_ReturnsDataToView()
     {
         $this->prepareData();
+        $this->assignVendor();
 
         $returned = $this->call('GET', '/vendors/assign');
         $data = $returned->getOriginalContent();
@@ -42,54 +32,38 @@ class VendorsAssignControllerTest extends TestCase
         $this->assertEquals(1, $count);
     }
 
-    public function testAssignVendor_FailureOccurs_ReturnsFailureResponse()
-    {
-        $this->setupMocks();
-
-        $this->mapping->shouldReceive('updateOrCreate')->once()->andThrow(new NoDataException());
-        $returned = $this->call('POST', '/vendors/assign');
-        $data = $returned->getData(true);
-        $this->assertEquals('no', $data['success']);
-    }
-
     public function testAssignVendor_AssignSuccess_AssignsVendor()
     {
-        $this->setupMocks();
+        $this->prepareData();
 
-        $mapping = new stdClass();
-        $mapping->id = 1;
-
-        $this->mapping->shouldReceive('updateOrCreate')->once()->andReturn($mapping);
-        $returned = $this->call('POST', '/vendors/assign');
-        $data = $returned->getData(true);
-        $this->assertEquals('yes', $data['success']);
-    }
-
-    public function testAssignVendor_VendorAssigned_DoesNotDuplicate()
-    {
-        $this->session(array('event_id' => 1));
-        $mapping = new EventVendor();
-        $mapping->create(array('event_id' => 1, 'vendor_id' => 1));
-
-        $this->call(
+        $returned = $this->call(
             'POST',
             '/vendors/assign',
             array(
                 'vendor_id' => 1,
             )
         );
-
-        $data = $mapping->all();
-        $this->assertEquals(1, $data->count());
+        $data = $returned->getData(true);
+        $this->assertEquals('yes', $data['success']);
     }
 
-    private function setupMocks()
+    public function testAssignVendor_VendorAssigned_DoesNotDuplicate()
     {
-        $this->vendor = Mockery::mock('Eloquent', 'Vendor');
-        App::instance('Vendor', $this->vendor);
+        $this->prepareData();
+        $this->assignVendor();
 
-        $this->mapping = Mockery::mock('Eloquent', 'EventVendor');
-        App::instance('EventVendor', $this->mapping);
+        $returned = $this->call(
+            'POST',
+            '/vendors/assign',
+            array(
+                'vendor_id' => 1,
+            )
+        );
+        $data = $returned->getData(true);
+        $this->assertEquals('no', $data['success']);
+
+        $data = EventVendor::all();
+        $this->assertEquals(1, $data->count());
     }
 
     private function prepareData()
@@ -113,7 +87,10 @@ class VendorsAssignControllerTest extends TestCase
         $event = new Events();
         $event->description = 'description';
         $event->save();
+    }
 
+    private function assignVendor()
+    {
         $EventVendor = new EventVendor();
         $EventVendor->event_id = 1;
         $EventVendor->vendor_id = 1;

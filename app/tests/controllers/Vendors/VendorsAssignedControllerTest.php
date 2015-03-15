@@ -5,13 +5,13 @@ class VendorsAssignedControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        Artisan::call('migrate:reset');
         Artisan::call('migrate');
         $this->session(['event_id' => 1, 'message' => 'message']);
     }
 
     public function tearDown()
     {
-        Artisan::call('migrate:reset');
         Session::forget('event_id');
     }
 
@@ -36,16 +36,18 @@ class VendorsAssignedControllerTest extends TestCase
 
     private function prepareInvalidData()
     {
+        $Vendor = new Vendor();
+        $Vendor->aka = 'aka';
+        $Vendor->save();
+
+        $Events = new Events();
+        $Events->description = 'description';
+        $Events->save();
+
         $EventVendor = new EventVendor();
         $EventVendor->event_id = 1;
         $EventVendor->vendor_id = 1;
         $EventVendor->active = 'no';
-        $EventVendor->save();
-
-        $EventVendor = new EventVendor();
-        $EventVendor->event_id = 2;
-        $EventVendor->vendor_id = 1;
-        $EventVendor->active = 'yes';
         $EventVendor->save();
     }
 
@@ -54,6 +56,10 @@ class VendorsAssignedControllerTest extends TestCase
         $vendor = new Vendor();
         $vendor->aka = 'test vendor';
         $vendor->save();
+
+        $Events = new Events();
+        $Events->description = 'description';
+        $Events->save();
 
         $EventVendor = new EventVendor();
         $EventVendor->event_id = 1;
