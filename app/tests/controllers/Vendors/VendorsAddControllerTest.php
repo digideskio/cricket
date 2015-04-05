@@ -5,6 +5,7 @@ class VendorsAddControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        Artisan::call('migrate:reset');
         Artisan::call('migrate');
     }
 
@@ -34,5 +35,23 @@ class VendorsAddControllerTest extends TestCase
         );
         $data = $returned->getData(true);
         $this->assertEquals('yes', $data['success']);
+    }
+
+    public function testAddVendor_DuplicateExists_ReturnsFailureJSON()
+    {
+        $vendor = new Vendor();
+        $vendor->aka = 'aka1';
+        $vendor->name = 'name';
+        $vendor->surname = 'surname';
+        $vendor->id_number = 'id_number';
+        $vendor->save();
+
+        $returned = $this->call(
+            'POST',
+            '/vendors/new',
+            array('aka' => 'aka1')
+        );
+        $data = $returned->getData(true);
+        $this->assertEquals('no', $data['success']);
     }
 }

@@ -10,7 +10,7 @@
             <?php $count = 0; ?>
             @foreach ($vendors as $vendor)
                 <?php $count++; ?>
-                <br>{{ $vendor->aka }} <a class="vendor-add-item" href="{{ url('events/vendors/items/add') }}/{{ $vendor->id }}">Add item</a>
+                <br>{{ $vendor->aka }} <a class="vendor-add-item" href="{{ url('items/assign') }}/{{ $vendor->id }}">Add item</a>
             @endforeach
             <?php if ($count === 0) { echo 'No assigned vendors'; } ?>
         {{ Form::close() }}

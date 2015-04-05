@@ -13,6 +13,6 @@ class ItemsRouter
             }
         });
 
-        Route::post('/items/assign', 'ItemsAssignController@assignItem');
+        Route::post('/items/assign/{vendor_id}', 'ItemsAssignController@assignItem');
     }
 }

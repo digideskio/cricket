@@ -11,14 +11,25 @@ function Events () {
     this.bindSave = function() {
         $('#Save').on('click', function(event) {
             event.preventDefault();
-            Base.call(
-                $('#add_url').val(),
-                $('#data_form').serialize(),
-                function() { window.location = $('#success_url').val() },
-                function() { alert('nay') }
-            );
+            self.doSave();
             return false;
         });
+        $('#description').on('keyup', function(event) {
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                event.stopPropagation();
+                self.doSave();
+                return false;
+            }
+        });
+    },
+    this.doSave = function() {
+        Base.call(
+            $('#add_url').val(),
+            $('#data_form').serialize(),
+            function() { window.location = $('#success_url').val() },
+            function() { alert('nay') }
+        );
     },
     this.bindEventSelectAnchors = function() {
         $('a.event-select').on('click', function(event) {

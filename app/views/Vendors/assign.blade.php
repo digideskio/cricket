@@ -15,5 +15,6 @@
             @endforeach
             <?php if ($count === 0) { echo 'No unassigned vendors'; } ?>
         {{ Form::close() }}
+        <br><a href="{{ url('vendors/new') }}">Create new vendor</a>
     </body>
 </html>

@@ -12,7 +12,7 @@
             <p style="<?php echo empty($message) === true ? 'display:none' : ''; ?>" id="feedback">{{ $message or '' }}</p>
 
             {{ Form::label('description', 'Event description') }}
-            {{ Form::text('description', '') }}
+            {{ Form::text('description', '', array('id' => 'description')) }}
             {{ Form::button('Save', array('id' => 'Save')) }}
         {{ Form::close() }}
     </body>

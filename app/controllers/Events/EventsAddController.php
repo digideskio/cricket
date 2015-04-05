@@ -9,6 +9,13 @@ class EventsAddController extends BaseAddController
 
     public function add()
     {
-        return parent::add();
+        if ($this->model->save() === false) {
+            return Response::json(
+                array('success' => 'no', 'message' => $this->model->errorString()),
+                200
+            );
+        }
+        Session::put('event_id', $this->model->id);
+        return Response::json(array('success' => 'yes', 'model' => $this->model), 200);
     }
 }

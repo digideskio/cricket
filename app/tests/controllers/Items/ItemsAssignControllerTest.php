@@ -17,7 +17,7 @@ class ItemsAssignControllerTest extends TestCase
     public function testAssignItem_FailureOccurs_ReturnsFailureResponse()
     {
         $this->session(array('event_id' => 1));
-        $returned = $this->call('POST', '/items/assign');
+        $returned = $this->call('POST', '/items/assign/1');
         $data = $returned->getData(true);
         $this->assertEquals('no', $data['success']);
     }
@@ -28,7 +28,7 @@ class ItemsAssignControllerTest extends TestCase
 
         $returned = $this->call(
             'POST',
-            '/items/assign',
+            '/items/assign/1',
             array(
                 'vendor_id' => 1,
                 'item_id' => 1,

@@ -28,7 +28,7 @@ class ItemsAssignController extends BaseController
     private function addMappingAttributes()
     {
         $this->mapping->event_id = Session::get('event_id');
-        $this->mapping->vendor_id = Input::get('vendor_id');
+        $this->mapping->vendor_id = Route::input('vendor_id');
         $this->mapping->item_id = Input::get('item_id');
     }
 }
